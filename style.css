@@ -90,3 +90,32 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 400%;
 }
+
+.summary {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+section {
+  border-top: 1px solid oklch(80% 3% 200);
+  padding-block: 1rem;
+}
+
+time {
+  color: oklch(45% 0% 0);
+  font-variant-numeric: tabular-nums;
+}
+
+ul {
+  padding-inline-start: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+section b {
+  color: var(--color-accent);
+}
