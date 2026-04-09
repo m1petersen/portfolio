@@ -1,5 +1,5 @@
 :root {
-  --color-accent: oklch(65% 50% 240);
+  --color-accent: oklch(35% 0.1 250);
 }
 
 html {
@@ -8,8 +8,8 @@ html {
 
 body {
   font: 100%/1.5 system-ui;
-  max-width: 80ch;
-  margin: auto;
+  max-width: 100ch;
+  margin-inline: max(1em, (100% - 100ch) / 2);
   padding: 1rem;
 }
 
@@ -117,5 +117,5 @@ li {
 }
 
 section b {
-  color: var(--color-accent);
+  color: oklch(35% 0.1 250);
 }
