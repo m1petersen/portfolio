@@ -1,0 +1,74 @@
+[
+    {
+        "title": "Healthy Calories Cost More",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Visualizing the Cost of Healthy Calories"
+    },
+    {
+        "title": "Persuasive or Deceptive Visualization?",
+        "year": 2026,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Exploring the Fine Line Between Persuasive and Deceptive Visualizations"
+    },
+    {
+        "title": "Predicting Recipe Ratings with Machine Learning",
+        "year": 2025,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Machine Learning Project for DSC80 class at UCSD"
+    },
+    {
+        "title": "NBA Draft and Performance Predictor",
+        "year": 2025,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A data science project analyzing whether NBA Draft Combine metrics improve predictions of a player's early career success compared to college stats."
+    },
+    {
+        "title": "SoCalGuessr",
+        "year": 2024,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A Machine Learning Project that uses a Convolutional Neural Network to predict the location of a photo taken in Southern California. "
+    },
+    {
+        "title": "Eyeglasses Detector",
+        "year": 2024,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A Machine Learning Project that uses a Convolutional Neural Network to predict whether a person is wearing eyeglasses or not."
+    },
+    {
+        "title": "Password Generator and Storer",
+        "year": 2024,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A Python project that generates strong passwords and securely stores them using encryption."
+    },
+    {
+        "title": "EDA of Taylor Swift's Discography",
+        "year": 2023,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "An exploratory data analysis project that visualizes trends and patterns in Taylor Swift's music over the years."
+    },
+    {
+        "title": "Friends Episode Name Analysis and Reboot Strategy",
+        "year": 2023,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "Analyzing Friends episode names and proposing a data-driven strategy for naming the episodes of a reboot of the show."
+    },
+    {
+        "title": "Digital Image Manipulation: RGB Transformation and Pixel-Level Filtering",
+        "year": 2022,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A project that explores digital image manipulation techniques, including RGB transformation and pixel-level filtering, to create visually appealing effects."
+    },
+    {
+        "title": "Personal Webpage with HTML and CSS",
+        "year": 2022,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A personal webpage built with HTML and CSS to showcase my skills and projects."
+    },
+    {
+        "title": "Microeconomic Price Tracking: Quantifying the Impact of Inflation on Student Consumer Staples",
+        "year": 2022,
+        "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+        "description": "A microeconomic project that tracks the prices of common consumer staples for students over time to analyze the impact of inflation on their purchasing power."
+    }
+]
