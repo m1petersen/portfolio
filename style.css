@@ -225,3 +225,105 @@ path {
 path.selected {
   fill: var(--color);
 }
+
+/* Meta Stats Display */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stats dt {
+  grid-row: 1;
+  font-weight: bold;
+}
+
+.stats dd {
+  grid-row: 2;
+  margin: 0;
+}
+
+/* Scatterplot Gridlines */
+#chart {
+  margin-top: 2rem;
+}
+
+.gridlines line {
+  stroke-opacity: 0.3;
+  stroke-dasharray: 4 4;
+}
+
+.gridlines path {
+  display: none; 
+}
+
+/* Tooltip Styling  */
+
+dl.info {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25em 1em;
+  margin: 0;
+  
+  transition-duration: 500ms;
+  transition-property: opacity, visibility;
+}
+
+dl.info dt {
+  color: var(--color-text-muted, #666);
+  font-weight: normal;
+  font-size: 0.9em;
+}
+
+dl.info dd {
+  margin: 0;
+  font-weight: bold;
+}
+
+.tooltip {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  z-index: 1000;
+}
+
+dl.info[hidden]:not(:hover, :focus-within) {
+  opacity: 0;
+  visibility: hidden;
+}
+
+circle {
+  transition: 200ms;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
+
+/* Brush Styling */
+@keyframes marching-ants {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+.selection {
+  fill-opacity: 0.1;
+  stroke: black;
+  stroke-opacity: 0.7;
+  stroke-dasharray: 5 3;
+  animation: marching-ants 2s linear infinite;
+}
+
+circle.selected {
+  fill: #ff6b6b;
+}
