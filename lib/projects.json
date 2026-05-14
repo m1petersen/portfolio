@@ -1,5 +1,11 @@
 [
     {
+        "title": "Bikewatching",
+        "year": 2026,
+        "image": "/images/Bikewatching_screenshot.png",
+        "description": "An immersive exploration of urban mobility. This interactive visualization maps the flow of bike traffic across the Greater Boston area."
+    },
+    {
         "title": "Healthy Calories Cost More",
         "year": 2026,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
@@ -70,11 +76,5 @@
         "year": 2022,
         "image": "https://vis-society.github.io/labs/2/images/empty.svg",
         "description": "A microeconomic project that tracks the prices of common consumer staples for students over time to analyze the impact of inflation on their purchasing power."
-    },
-    {
-        "title": "Bikewatching",
-        "year": 2026,
-        "image": "/images/Bikewatching_screenshot.png",
-        "description": "An immersive exploration of urban mobility. This interactive visualization maps the flow of bike traffic across the Greater Boston area."
     }
 ]
