@@ -327,3 +327,10 @@ circle:hover {
 circle.selected {
   fill: #ff6b6b;
 }
+
+.projects img {
+  width: 100%;
+  height: 200px; /* Adjust this number to fit your layout */
+  object-fit: cover; /* Crops the edges of the image to fit the box perfectly */
+  border-radius: 8px; /* Optional: adds nice rounded corners */
+}
