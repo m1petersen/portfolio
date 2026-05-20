@@ -330,7 +330,27 @@ circle.selected {
 
 .projects img {
   width: 100%;
-  height: 200px; /* Adjust this number to fit your layout */
-  object-fit: cover; /* Crops the edges of the image to fit the box perfectly */
-  border-radius: 8px; /* Optional: adds nice rounded corners */
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Scatterplot Dot Animations */
+circle {
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: all 200ms, r calc(var(--r) * 100ms);
+  
+  @starting-style {
+    r: 0;
+  }
+}
+
+circle:hover {
+  transform: scale(1.5);
+}
+
+#commit-progress {
+  width: 580px; 
+  margin: 0 1rem; 
 }
