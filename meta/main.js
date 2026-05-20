@@ -1,13 +1,11 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
+import scrollama from 'https://cdn.jsdelivr.net/npm/scrollama@3.2.0/+esm';
 
 // === Global Variables ===
 let data = [];
 let commits = [];
 let xScale, yScale;
-let commitProgress = 100;
-let timeScale;
-let commitMaxTime;
-let colors = d3.scaleOrdinal(d3.schemeTableau10); // Added for Step 2
+let colors = d3.scaleOrdinal(d3.schemeTableau10); 
 
 // === Data Loading & Processing ===
 async function loadData() {
@@ -50,7 +48,8 @@ function processCommits(data) {
       });
 
       return ret;
-    });
+    })
+    .sort((a, b) => a.datetime - b.datetime); 
 }
 
 // === Statistics Display ===
@@ -65,7 +64,6 @@ function renderCommitInfo(data, commits) {
   dl.append('dt').text('Total commits');
   dl.append('dd').text(commits.length);
 
-  // --- EXTRA STATS ---
   const numFiles = d3.group(data, (d) => d.file).size;
   dl.append('dt').text('Number of files');
   dl.append('dd').text(numFiles);
@@ -187,14 +185,12 @@ function renderScatterPlot(data, commits) {
     .style('fill-opacity', 0.7)
     .on('mouseenter', (event, commit) => {
       d3.select(event.currentTarget).style('fill-opacity', 1);
-      
       renderTooltipContent(commit);
       updateTooltipVisibility(true);
       updateTooltipPosition(event);
     })
     .on('mouseleave', (event) => {
       d3.select(event.currentTarget).style('fill-opacity', 0.7);
-      
       updateTooltipVisibility(false);
     });
 
@@ -283,7 +279,7 @@ function updateFileDisplay(filteredCommits) {
     .style('--color', (d) => colors(d.type));
 }
 
-// === Tooltip Functions ===
+// === Tooltip & Brush Functions ===
 function renderTooltipContent(commit) {
   const link = document.getElementById('commit-link');
   const date = document.getElementById('commit-date');
@@ -295,9 +291,7 @@ function renderTooltipContent(commit) {
 
   link.href = commit.url;
   link.textContent = commit.id;
-  date.textContent = commit.datetime?.toLocaleString('en', {
-    dateStyle: 'full',
-  });
+  date.textContent = commit.datetime?.toLocaleString('en', { dateStyle: 'full' });
   time.textContent = commit.time;
   author.textContent = commit.author;
   lines.textContent = commit.totalLines;
@@ -316,51 +310,32 @@ function updateTooltipPosition(event) {
   }
 }
 
-// === Brushing Interactivity ===
 function brushed(event) {
   const selection = event.selection;
-  
-  d3.selectAll('circle').classed('selected', (d) =>
-    isCommitSelected(selection, d)
-  );
-  
+  d3.selectAll('circle').classed('selected', (d) => isCommitSelected(selection, d));
   renderSelectionCount(selection);
   renderLanguageBreakdown(selection);
 }
 
 function isCommitSelected(selection, commit) {
   if (!selection) return false;
-
   const min = { x: selection[0][0], y: selection[0][1] };
   const max = { x: selection[1][0], y: selection[1][1] };
-
   const x = xScale(commit.datetime);
   const y = yScale(commit.hourFrac);
-
   return x >= min.x && x <= max.x && y >= min.y && y <= max.y;
 }
 
 function renderSelectionCount(selection) {
-  const selectedCommits = selection
-    ? commits.filter((d) => isCommitSelected(selection, d))
-    : [];
-
+  const selectedCommits = selection ? commits.filter((d) => isCommitSelected(selection, d)) : [];
   const countElement = document.getElementById('selection-count');
-  if (countElement) {
-    countElement.textContent = `${
-      selectedCommits.length || 'No'
-    } commits selected`;
-  }
-
+  if (countElement) countElement.textContent = `${selectedCommits.length || 'No'} commits selected`;
   return selectedCommits;
 }
 
 function renderLanguageBreakdown(selection) {
-  const selectedCommits = selection
-    ? commits.filter((d) => isCommitSelected(selection, d))
-    : [];
+  const selectedCommits = selection ? commits.filter((d) => isCommitSelected(selection, d)) : [];
   const container = document.getElementById('language-breakdown');
-
   if (!container) return;
 
   if (selectedCommits.length === 0) {
@@ -370,67 +345,91 @@ function renderLanguageBreakdown(selection) {
 
   const requiredCommits = selectedCommits.length ? selectedCommits : commits;
   const lines = requiredCommits.flatMap((d) => d.lines);
-
-  const breakdown = d3.rollup(
-    lines,
-    (v) => v.length,
-    (d) => d.type
-  );
+  const breakdown = d3.rollup(lines, (v) => v.length, (d) => d.type);
 
   container.innerHTML = '';
-
   for (const [language, count] of breakdown) {
     const proportion = count / lines.length;
     const formatted = d3.format('.1~%')(proportion);
-
-    container.innerHTML += `
-      <dt>${language}</dt>
-      <dd>${count} lines (${formatted})</dd>
-    `;
+    container.innerHTML += `<dt>${language}</dt><dd>${count} lines (${formatted})</dd>`;
   }
 }
 
-// === Slider Interactivity ===
-function onTimeSliderChange() {
-  const slider = document.getElementById('commit-progress');
-  if (!slider) return;
+// === Scrollytelling Setup ===
+function renderScrollytelling() {
+  d3.select('#scatter-story')
+    .selectAll('.step')
+    .data(commits)
+    .join('div')
+    .attr('class', 'step')
+    .html((d, i) => `
+      On ${d.datetime.toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' })},
+      I made <a href="${d.url}" target="_blank">${
+        i > 0 ? 'another glorious commit' : 'my first commit, and it was glorious'
+      }</a>.
+      I edited ${d.totalLines} lines across ${
+        d3.rollups(d.lines, (D) => D.length, (d) => d.file).length
+      } files.
+    `);
 
-  commitProgress = Number(slider.value);
-  commitMaxTime = timeScale.invert(commitProgress);
-  
-  const timeDisplay = document.getElementById('commit-time');
-  if (timeDisplay) {
-    timeDisplay.textContent = commitMaxTime.toLocaleString('en', { 
-      dateStyle: 'long', 
-      timeStyle: 'short' 
+  const scatterScroller = scrollama();
+  scatterScroller
+    .setup({
+      container: '#scrolly-1',
+      step: '#scrolly-1 .step',
+      offset: 0.5,
+    })
+    .onStepEnter((response) => {
+      d3.selectAll('#scrolly-1 .step').classed('is-active', false);
+      d3.select(response.element).classed('is-active', true);
+
+      const currentCommitDate = response.element.__data__.datetime;
+      const filteredCommits = commits.filter((d) => d.datetime <= currentCommitDate);
+      const filteredData = data.filter((d) => d.datetime <= currentCommitDate);
+
+      updateScatterPlot(filteredData, filteredCommits);
+      renderCommitInfo(filteredData, filteredCommits);
     });
-  }
 
-  const filteredCommits = commits.filter((d) => d.datetime <= commitMaxTime);
-  const filteredData = data.filter((d) => d.datetime <= commitMaxTime);
+  // Setup File Sizes Story
+  d3.select('#file-story')
+    .selectAll('.step')
+    .data(commits)
+    .join('div')
+    .attr('class', 'step')
+    .html((d, i) => `
+      On ${d.datetime.toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' })},
+      I pushed changes touching ${
+        d3.rollups(d.lines, (D) => D.length, (d) => d.file).length
+      } files. The codebase now looks like this!
+    `);
 
-  updateScatterPlot(filteredData, filteredCommits);
-  renderCommitInfo(filteredData, filteredCommits);
-  
-  updateFileDisplay(filteredCommits);
+  const fileScroller = scrollama();
+  fileScroller
+    .setup({
+      container: '#scrolly-2',
+      step: '#scrolly-2 .step',
+      offset: 0.5,
+    })
+    .onStepEnter((response) => {
+      d3.selectAll('#scrolly-2 .step').classed('is-active', false);
+      d3.select(response.element).classed('is-active', true);
+
+      const currentCommitDate = response.element.__data__.datetime;
+      const filteredCommits = commits.filter((d) => d.datetime <= currentCommitDate);
+      
+      updateFileDisplay(filteredCommits);
+    });
 }
 
 // === Initialization ===
 data = await loadData();
 commits = processCommits(data);
 
-timeScale = d3.scaleTime()
-  .domain([
-    d3.min(commits, (d) => d.datetime),
-    d3.max(commits, (d) => d.datetime),
-  ])
-  .range([0, 100]);
-
+// Initial renders
 renderCommitInfo(data, commits);
 renderScatterPlot(data, commits);
+updateFileDisplay(commits);
 
-const slider = document.getElementById('commit-progress');
-if (slider) {
-  slider.addEventListener('input', onTimeSliderChange);
-  onTimeSliderChange(); 
-}
+// Start Scrollytelling
+renderScrollytelling();

@@ -390,3 +390,40 @@ circle:hover {
   background: var(--color, steelblue); 
   border-radius: 50%;
 }
+
+/* Scrollytelling Layout */
+#scrolly-1, #scrolly-2 {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+#scrolly-1 > *, #scrolly-2 > * {
+  flex: 1;
+}
+
+#scatter-story, #file-story {
+  position: relative;
+}
+
+#scatter-plot, #file-plot {
+  position: sticky;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  height: auto; 
+  max-height: 90vh;
+  overflow: visible;
+}
+
+.step {
+  padding-bottom: 200px;
+  margin-bottom: 2rem;
+  opacity: 0.2;
+  transition: opacity 300ms;
+}
+
+.step.is-active {
+  opacity: 1;
+}

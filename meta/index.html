@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>meta</title>
-
-    <link rel="stylesheet" href="../style.css">
-    <script src="../global.js" type="module"></script>
-
-    <script type="module" src="main.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta - Codebase History</title>
+  
+  <link rel="stylesheet" href="../style.css"> 
+  
+  <script type="module" src="main.js"></script>
 </head>
 <body>
-    <h1>Meta</h1>
-    <p>This page includes stats about the code of this website.</p>
+  <main>
+    <h1>Meta: A History of My Code</h1>
+    <p>Scroll down to see how this codebase evolved over time.</p>
 
-    <label id="time-slider-container" style="display: flex; align-items: baseline;">
-      Show commits until:
-      <input type="range" id="commit-progress" min="0" max="100" value="100">
-      <time id="commit-time" style="margin-left: auto;"></time>
-    </label>
+    <div id="scrolly-1">
+      <div id="scatter-story">
+        </div>
+      
+      <div id="scatter-plot">
+        <div id="stats"></div>
+        <div id="chart"></div>
+        
+        <div id="selection-count">No commits selected</div>
+        <dl id="language-breakdown"></dl>
+      </div>
+    </div>
 
-    <dl id="files"></dl>
+    <div id="scrolly-2">
+      <div id="file-story">
+        </div>
+      
+      <div id="file-plot">
+        <dl id="files"></dl>
+      </div>
+    </div>
+  </main>
 
-    <div id="stats"></div>
+  <dl id="commit-tooltip" class="info tooltip" hidden>
+    <dt>Commit</dt>
+    <dd><a href="" id="commit-link" target="_blank"></a></dd>
 
-    <h2>Commits by time of day</h2>
-    <div id="chart"></div>
+    <dt>Date</dt>
+    <dd id="commit-date"></dd>
 
-    <p id="selection-count">No commits selected</p>
-    <dl id="language-breakdown" class="stats"></dl>
+    <dt>Time</dt>
+    <dd id="commit-time"></dd>
 
-    <dl id="commit-tooltip" class="info tooltip" hidden>
-      <dt>Commit</dt>
-      <dd>
-        <a href="" id="commit-link" target="_blank"></a>
-      </dd>
+    <dt>Author</dt>
+    <dd id="commit-author"></dd>
 
-      <dt>Date</dt>
-      <dd id="commit-date"></dd>
+    <dt>Lines Edited</dt>
+    <dd id="commit-lines"></dd>
+  </dl>
 
-      <dt>Time</dt>
-      <dd id="commit-time"></dd>
-
-      <dt>Author</dt>
-      <dd id="commit-author"></dd>
-
-      <dt>Lines Edited</dt>
-      <dd id="commit-lines"></dd>
-    </dl>
 </body>
 </html>
